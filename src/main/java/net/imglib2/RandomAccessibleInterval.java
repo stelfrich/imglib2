@@ -47,4 +47,10 @@ package net.imglib2;
  * @author Stephan Saalfeld (saalfeld@mpi-cbg.de)
  */
 public interface RandomAccessibleInterval< T > extends RandomAccessible< T >, Interval
-{}
+{
+	@Override
+	default Interval definedBounds()
+	{
+		return this;
+	}
+}

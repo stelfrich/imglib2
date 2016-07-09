@@ -34,6 +34,7 @@
 
 package net.imglib2;
 
+import net.imglib2.outofbounds.OutOfBoundsFactory;
 import net.imglib2.view.Views;
 
 /**
@@ -120,4 +121,16 @@ public interface RandomAccessible< T > extends EuclideanSpace
 	 * @return random access sampler
 	 */
 	public RandomAccess< T > randomAccess( Interval interval );
+
+	/**
+	 * Computes the bounds in which the RandomAccess can be sampled without
+	 * using an {@link OutOfBoundsFactory}. This can be used to determine if,
+	 * provided an Interval, an (other) OOBF has to be applied.
+	 * 
+	 * @return the {@link Interval} in which {@code this} can return values.
+	 */
+	public default Interval definedBounds() {
+		return null;
+	}
+
 }

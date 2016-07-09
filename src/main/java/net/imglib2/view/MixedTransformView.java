@@ -122,4 +122,10 @@ public class MixedTransformView< T > implements TransformedRandomAccessible< T >
 			fullViewRandomAccessible = TransformBuilder.getEfficientRandomAccessible( null, this );
 		return fullViewRandomAccessible.randomAccess();
 	}
+	
+	@Override
+	public Interval definedBounds()
+	{
+		return source.definedBounds();
+	}
 }

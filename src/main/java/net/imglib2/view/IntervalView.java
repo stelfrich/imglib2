@@ -173,4 +173,15 @@ public class IntervalView< T > extends AbstractInterval implements RandomAccessi
 	{
 		return getFullViewIterableInterval().localizingCursor();
 	}
+
+	@Override
+	public Interval definedBounds()
+	{
+		final Interval definedBounds = source.definedBounds();
+		
+		if ((definedBounds != null) && (source instanceof TransformedRandomAccessible))
+			return this;
+		
+		return definedBounds;
+	}
 }
