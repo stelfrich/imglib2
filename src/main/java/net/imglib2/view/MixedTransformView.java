@@ -38,6 +38,7 @@ import net.imglib2.Interval;
 import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
 import net.imglib2.View;
+import net.imglib2.outofbounds.OutOfBoundsFactory;
 import net.imglib2.transform.integer.Mixed;
 import net.imglib2.transform.integer.MixedTransform;
 
@@ -121,5 +122,17 @@ public class MixedTransformView< T > implements TransformedRandomAccessible< T >
 		if ( fullViewRandomAccessible == null )
 			fullViewRandomAccessible = TransformBuilder.getEfficientRandomAccessible( null, this );
 		return fullViewRandomAccessible.randomAccess();
+	}
+
+	/**
+	 * Computes the bounds in which the RandomAccess can be sampled without
+	 * using an {@link OutOfBoundsFactory}. This can be used to determine if,
+	 * provided an Interval, an (other) OOBF has to be applied.
+	 * 
+	 * @return the {@link Interval} in which {@code this} can return values.
+	 */
+	public Interval definedBounds()
+	{
+		return null;
 	}
 }

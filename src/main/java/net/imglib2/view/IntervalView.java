@@ -44,6 +44,7 @@ import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.View;
+import net.imglib2.outofbounds.OutOfBoundsFactory;
 import net.imglib2.view.iteration.IterableTransformBuilder;
 
 /**
@@ -69,6 +70,11 @@ public class IntervalView< T > extends AbstractInterval implements RandomAccessi
 	 * TODO Javadoc
 	 */
 	protected IterableInterval< T > fullViewIterableInterval;
+
+	/**
+	 * TODO Javadoc
+	 */
+	protected Interval definedBounds;
 
 	/**
 	 * Create a view that defines an interval on a source. It is the callers
@@ -172,5 +178,25 @@ public class IntervalView< T > extends AbstractInterval implements RandomAccessi
 	public Cursor< T > localizingCursor()
 	{
 		return getFullViewIterableInterval().localizingCursor();
+	}
+
+	/**
+	 * Computes the bounds in which the RandomAccess can be sampled without
+	 * using an {@link OutOfBoundsFactory}. This can be used to determine if,
+	 * provided an Interval, an (other) OOBF has to be applied.
+	 * 
+	 * @return the {@link Interval} in which {@code this} can return values.
+	 */
+	public Interval definedBounds()
+	{
+		return definedBounds;
+	}
+	
+	/**
+	 * TODO Documentation
+	 * @param definedBounds
+	 */
+	public void setDefinedBounds( final Interval definedBounds) {
+		this.definedBounds = definedBounds;
 	}
 }

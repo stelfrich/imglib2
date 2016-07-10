@@ -39,6 +39,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.imglib2.EuclideanSpace;
+import net.imglib2.FinalInterval;
 import net.imglib2.FlatIterationOrder;
 import net.imglib2.Interval;
 import net.imglib2.IterableInterval;
@@ -263,7 +264,21 @@ public class Views
 	 */
 	public static < T > IntervalView< T > interval( final RandomAccessible< T > randomAccessible, final long[] min, final long[] max )
 	{
-		return new IntervalView< T >( randomAccessible, min, max );
+		IntervalView< T > intervalView = new IntervalView<>( randomAccessible, min, max );
+
+		if ( randomAccessible instanceof ExtendedRandomAccessibleInterval )
+			intervalView.setDefinedBounds( null );
+
+		if ( randomAccessible instanceof MixedTransformView )
+			intervalView.setDefinedBounds( new FinalInterval( min, max ) );
+
+		if ( randomAccessible instanceof Interval )
+		{
+			Interval interval = ( Interval ) randomAccessible;
+			intervalView.setDefinedBounds( interval );
+		}
+
+		return intervalView;
 	}
 
 	/**
@@ -279,7 +294,21 @@ public class Views
 	 */
 	public static < T > IntervalView< T > interval( final RandomAccessible< T > randomAccessible, final Interval interval )
 	{
-		return new IntervalView< T >( randomAccessible, interval );
+		IntervalView< T > intervalView = new IntervalView<>( randomAccessible, interval );
+
+		if ( randomAccessible instanceof ExtendedRandomAccessibleInterval )
+			intervalView.setDefinedBounds( null );
+
+		if ( randomAccessible instanceof MixedTransformView )
+			intervalView.setDefinedBounds( interval );
+
+		if ( randomAccessible instanceof Interval )
+		{
+			Interval previousInterval = ( Interval ) randomAccessible;
+			intervalView.setDefinedBounds( previousInterval );
+		}
+
+		return intervalView;
 	}
 
 	/**

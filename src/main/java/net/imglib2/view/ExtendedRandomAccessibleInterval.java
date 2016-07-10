@@ -56,7 +56,7 @@ final public class ExtendedRandomAccessibleInterval< T, F extends RandomAccessib
 	final protected F source;
 
 	final protected OutOfBoundsFactory< T, ? super F > factory;
-
+	
 	public ExtendedRandomAccessibleInterval( final F source, final OutOfBoundsFactory< T, ? super F > factory )
 	{
 		this.source = source;
@@ -92,5 +92,17 @@ final public class ExtendedRandomAccessibleInterval< T, F extends RandomAccessib
 	public OutOfBoundsFactory< T, ? super F > getOutOfBoundsFactory()
 	{
 		return factory;
+	}
+
+	/**
+	 * Computes the bounds in which the RandomAccess can be sampled without
+	 * using an {@link OutOfBoundsFactory}. This can be used to determine if,
+	 * provided an Interval, an (other) OOBF has to be applied.
+	 * 
+	 * @return the {@link Interval} in which {@code this} can return values.
+	 */
+	public Interval definedBounds()
+	{
+		return null;
 	}
 }
